@@ -1,0 +1,60 @@
+<h2 class="search__title">Pesquise seu CEP</h2>
+<section class="search__container">
+    <form class="search-form" [formGroup]="formSearch" (ngSubmit)="pesquisarCEP()" >
+        <input 
+            type="text" 
+            placeholder="Digite seu CEP"
+            formControlName = "CEP"
+            [class.valid] = "formSearch.controls['CEP'].valid"
+            [class.invalid] = "formSearch.controls['CEP'].invalid && 
+            (formSearch.controls['CEP'].touched || formSearch.controls['CEP'].dirty)"
+            mask="00000-000"
+            [dropSpecialCharacters]="false"
+            value="{{formSearch.value.CEP}}"
+        >
+        <div *ngIf="formSearch.controls['CEP'].invalid && 
+            (formSearch.controls['CEP'].touched || formSearch.controls['CEP'].dirty)"
+        >
+            <small class="error-message" *ngIf="formSearch.controls['CEP'].hasError('minlength')">
+                Esse campo precisa de no mínimo 9 caracteres.
+            </small>
+
+            <small class="error-message" *ngIf="formSearch.controls['CEP'].hasError('required')">
+                Esse campo é obrigatório
+            </small>
+        </div>
+        <input type="text" 
+            placeholder="Digite o logradouro"
+            formControlName = "logradouro"
+            value="{{ceps.logradouro}}"
+        >
+        <input type="text"
+            placeholder="Complemento"
+            formControlName = "complemento"
+            value="{{ceps.complemento}}"
+        >
+        <input type="text" 
+            placeholder="Bairro"
+            formControlName = "bairro"
+            value="{{ceps.bairro}}"
+        >
+        <input type="text" 
+            placeholder="UF"
+            formControlName = "UF"
+            maxlength="2"
+            value="{{ceps.uf}}"
+        >
+        <input 
+            type="number" 
+             placeholder="Unidade"
+            formControlName = "unidade"
+            value="{{ceps.unidade}}"
+        >
+        <button [disabled]="formSearch.invalid" type="submit">Pesquisar</button>
+    </form>
+    <address class="Iframe">
+        <iframe [src]="IframeUrl" height="650" width="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" *ngIf="displayIframe"></iframe>
+        <p>{{ceps.logradouro}}, {{ceps.localidade}} - {{ceps.uf}}, {{ceps.cep}}</p>
+    </address>
+
+</section>

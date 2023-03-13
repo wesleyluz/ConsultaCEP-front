@@ -1,0 +1,48 @@
+<h2 class="search__title"> Buscar por UF</h2>
+<section class="search__container">
+    <form class="search-form" [formGroup]="formSearch" (submit)="PesquisaporUfPaged()">
+        <input 
+            type="text" 
+            placeholder="UF"
+            formControlName = "UF"
+            maxlength="2"       
+        >  
+
+        <button class="Button" [disabled]="formSearch.invalid" type="submit">Pesquisar</button>
+        <div class="itens__container" *ngIf="Listofceps.length>0">
+            <span>Todos os CEPs da UF {{Listofceps[0].uf}}, na base de dados:</span>
+
+            <select formControlName="selectOptions" (ngModelChange)="selectChange($event)">
+                <option value="" disabled selected hidden>Qnt por pagina</option>
+                <option [ngValue] = 5>  05 </option>
+                <option [ngValue] = 10> 10 </option>
+                <option [ngValue] = 20> 20 </option>
+                <option [ngValue] = 50> 50 </option>
+            </select>   
+            <ul>
+                <li *ngFor="let ceps of Listofceps">
+                    <strong>CEP:</strong>
+                    <p>{{ceps.cep}}</p>
+                    <strong>Logradouro: </strong>
+                    <p>{{ceps.logradouro}}</p>
+                    <strong>Complemento: </strong>
+                    <p>{{ceps.complemento}}</p>
+                    <strong>Bairro: </strong>
+                    <p>{{ceps.bairro}}</p>
+                    <strong>Localidade: </strong>
+                    <p>{{ceps.localidade}}</p>
+                    <strong>UF: </strong>
+                    <p>{{ceps.uf}}</p>
+                    <strong>Unidade: </strong>
+                    <p>{{ceps.unidade}}</p>
+
+                </li>
+            </ul>
+            <div class="navButtons">
+                <button [disabled]="!canPrev" (click)="NavigatePage(false)"> <i class="fa-solid fa-arrow-left"></i> </button>
+                <strong>{{currentPage+1}} de {{totalOfpages}}</strong>
+                <button [disabled]="!canNext" (click)="NavigatePage(true)"> <i class="fa-solid fa-arrow-right"></i> </button>
+            </div>
+        </div>
+    </form>
+</section>
